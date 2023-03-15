@@ -1,11 +1,11 @@
 # the-terminal-dev
 
-Install dependencies
+## Install dependencies
 ```
 yarn
 ```
 
-Start project
+## Start project
 ```
 npm run docs:dev 
 ```
