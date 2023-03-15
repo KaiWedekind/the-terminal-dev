@@ -1,0 +1,15 @@
+{
+  "name": "the-teminal-dev",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "https://github.com/KaiWedekind/the-terminal-dev.git",
+  "author": "Kai Wedekind <wedekind.kai@googlemail.com>",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.0.0-alpha.59"
+  }
+}
