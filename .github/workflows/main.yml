@@ -7,28 +7,34 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.DEPLOY_GITHUB_TOKEN_THE_TERMINAL_DEV }}
-          fetch-depth: 0
+          repository: KaiWedekind/the-terminal-dev
+          token: ${{ secrets.PAT }}
+          ref: main
       - uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: npm
       - run: npm ci
       - name: Build
-        run: npm run docs:build
+        run: npm run docs:build --if-present
+      - run: npm test
       - uses: actions/configure-pages@v2
       - uses: actions/upload-pages-artifact@v1
         with:
           path: docs/.vitepress/dist
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v1
+      - name: Deploy to GitHub Pages
+        # You may pin to the exact commit or the version.
+        # uses: JamesIves/github-pages-deploy-action@164583b9e44b4fc5910e78feb607ea7c98d3c7b9
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          # This is the branch you wish to deploy to, for example gh-pages or docs.
+          branch: gh-pages
+          # The folder in your repository that you want to deploy. If your build script compiles into a directory named build you would put it here. Folder paths cannot have a leading / or ./. If you wish to deploy the root directory you can place a . here.
+          folder: docs/.vitepress/dist
